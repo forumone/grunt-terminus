@@ -56,10 +56,9 @@ Command to run or a function which returns the command. Supports underscore temp
 
 ### machine_token
 
-*Required*<br>
 Type: `string`
 
-Machine token used to connect to Pantheon
+Machine token used to connect to Pantheon. If `machine_token` is provided Terminus will run `auth:login` before running any commands.
 
 ### organization
 Type: `string`
