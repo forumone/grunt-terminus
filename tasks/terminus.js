@@ -6,6 +6,7 @@
  * Licensed under the MIT license.
  */
 
+'use strict';
 
 // Merge task-specific and/or target-specific options with these defaults.
 const defaultOptions = {
