@@ -1,7 +1,7 @@
 {
   "name": "grunt-terminus",
   "description": "Runs Terminus commands on the Pantheon environment",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/forumone/grunt-terminus",
   "author": {
     "name": "William Hurley",
