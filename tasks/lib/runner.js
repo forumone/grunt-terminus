@@ -6,12 +6,16 @@ const retry = require('bluebird-retry');
 const spawn = require('child_process').spawn;
 const pad = require('pad-number');
 
-module.exports = function (grunt, machine_token, opts) {
-  const token = machine_token;
+module.exports = function (grunt, opts) {
   const options = Object.assign({
-    timeout: 0,
+    machine_token: null,
+    execOptions: {}
   }, opts);
-
+  
+  options.execOptions = Object.assign({
+    timeout: 0
+  }, opts.execOptions);
+  
   /**
    * Executes a dry run of the commands
    */
@@ -109,7 +113,7 @@ module.exports = function (grunt, machine_token, opts) {
   const nonInteractiveCommand = function (cmd) {
     const command = `terminus ${cmd}`;
 
-    return exec(command, options)
+    return exec(command, options.execOptions)
     .then(result => ({
       result,
       command,
@@ -176,8 +180,16 @@ module.exports = function (grunt, machine_token, opts) {
     run,
   };
 
-  return run(`auth:login --machine-token=${token}`)
-  .then(() => funcs)
+  let ret;
+  
+  if (options.hasOwnProperty('machine_token') && options.machine_token !== null) {
+    ret = run(`auth:login --machine-token=${options.machine_token}`);
+  }
+  else {
+    ret = Promise.resolve();
+  }
+  
+  return ret.then(() => funcs)
   .catch(err => Promise.reject({
     log: [`Error: failed to connect to Pantheon: (${err.command})`],
     school: '',
