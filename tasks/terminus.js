@@ -7,7 +7,6 @@
  */
 
 'use strict';
-
 // Merge task-specific and/or target-specific options with these defaults.
 const defaultOptions = {
   machine_token: '',
@@ -18,9 +17,9 @@ const defaultOptions = {
 };
 
 module.exports = function (grunt) {
-  const getRunner =  function (machine_token, execOptions) {
+  const getRunner =  function (options) {
     const runner = require('./lib/runner');
-    return runner(grunt, machine_token, execOptions);
+    return runner(grunt, options);
   };
 
   /**
@@ -42,7 +41,7 @@ module.exports = function (grunt) {
 
     let runner;
 
-    getRunner(options.machine_token, options.execOptions)
+    getRunner(options)
     .then((obj) => {
       runner = obj;
 
